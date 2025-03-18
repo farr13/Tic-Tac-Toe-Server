@@ -9,10 +9,17 @@ class tic_tac_toe:
         self.gameEnd = False
     
     def reset_game(self):
+        """
+        This function sets the board back to its default state.
+        """
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.moves = []
     
     def input_move(self, row, column):
+        """
+        This function takes two inputs row and column and uses it to make the players desired move.
+        This function also prevents the player from inputting duplicate moves.
+        """
         if (([row, column] in self.moves)):
             print("Cannot make this move as it has already been made!")
             #Ensures same player goes again becasue swap is called in main function
@@ -22,15 +29,24 @@ class tic_tac_toe:
             self.moves.append([row, column])
 
     def swap(self):
+        """
+        This function swaps the current player of the game
+        """
         if(self.player == 1):
             self.player = 2
         else:
             self.player = 1
     
     def display(self):
+        """
+        This function displays the current state of the objects board.
+        """
         print(f"{self.board[0][0]} | {self.board[0][1]} | {self.board[0][2]}\n__________\n{self.board[1][0]} | {self.board[1][1]} | {self.board[1][2]}\n__________\n{self.board[2][0]} | {self.board[2][1]} | {self.board[2][2]}")
     
     def game_end_tie(self):
+        """
+        This function returns true if it detects that all playable moves has been made.
+        """
         for row in self.board:
             for column in row:
                 if column == 0:
@@ -38,6 +54,10 @@ class tic_tac_toe:
         return True
 
     def game_end(self):
+        """
+        This fucntion will return True if it detect that a player has 
+        won the game or the game has ended in a tie and returns False otherwise.
+        """
         #Vertical Win
         if (self.board[0][0] == self.player & self.board[0][1] == self.player & self.board[0][2] == self.player):
             print(f"Congrats player {self.player}, You Won!")
@@ -74,6 +94,9 @@ class tic_tac_toe:
             return False
         
 def main():
+    """
+    Begins the game of Tic Tac Toe
+    """
     main_game = tic_tac_toe()
     main_game.display()
     gameEnd = False
