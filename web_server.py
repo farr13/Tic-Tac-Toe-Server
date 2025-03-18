@@ -13,8 +13,10 @@ class tic_tac_toe:
         self.moves = []
     
     def input_move(self, row, column):
-        if ([row, column] in self.moves):
+        if (([row, column] in self.moves)):
             print("Cannot make this move as it has already been made!")
+            #Ensures same player goes again becasue swap is called in main function
+            self.swap()
         else:
             self.board[row][column] = self.player
             self.moves.append([row, column])
@@ -78,7 +80,10 @@ def main():
     while(not gameEnd):
         row = input("Input the row you want to play: ")
         column = input("Input the column you want to play: ")
-        main_game.input_move(int(row), int(column))
+        try:
+            main_game.input_move(int(row), int(column))
+        except:
+            print("Input must be an Integer and within the board")
         gameEnd = main_game.game_end()
         main_game.swap()
         main_game.display()
