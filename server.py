@@ -36,40 +36,40 @@ class tic_tac_toe:
         return True
 
     def game_end(self):
-        #Vertical Win
-        if (self.board[0][0] == self.player and self.board[0][1] == self.player and self.board[0][2] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        elif (self.board[1][0] == self.player and self.board[1][1] == self.player and self.board[1][2] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        elif (self.board[2][0] == self.player and self.board[2][1] == self.player and self.board[2][2] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        #Horizontal Win
-        elif (self.board[0][0] == self.player and self.board[1][0] == self.player and self.board[2][0] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        elif (self.board[0][1] == self.player and self.board[1][1] == self.player and self.board[2][1] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        elif (self.board[0][2] == self.player and self.board[1][2] == self.player and self.board[2][2] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        #Diagonal Win
-        elif (self.board[0][0] == self.player and self.board[1][1] == self.player and self.board[2][2] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        elif (self.board[0][2] == self.player and self.board[1][1] == self.player and self.board[2][0] == self.player):
-            print(f"Congrats player {self.player}, You Won!")
-            self.gameEnd = True
-        #Tie Game
-        elif self.game_end_tie():
-            print("Tie Game!")
-            self.gameEnd = True
-        #No Win
-        else:
-            self.gameEnd = False
+            #Vertical Win
+            if (self.board[0][0] == self.player and self.board[0][1] == self.player and self.board[0][2] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            elif (self.board[1][0] == self.player and self.board[1][1] == self.player and self.board[1][2] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            elif (self.board[2][0] == self.player and self.board[2][1] == self.player and self.board[2][2] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            #Horizontal Win
+            elif (self.board[0][0] == self.player and self.board[1][0] == self.player and self.board[2][0] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            elif (self.board[0][1] == self.player and self.board[1][1] == self.player and self.board[2][1] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            elif (self.board[0][2] == self.player and self.board[1][2] == self.player and self.board[2][2] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            #Diagonal Win
+            elif (self.board[0][0] == self.player and self.board[1][1] == self.player and self.board[2][2] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            elif (self.board[0][2] == self.player and self.board[1][1] == self.player and self.board[2][0] == self.player):
+                print(f"Congrats player {self.player}, You Won!")
+                self.gameEnd = True
+            #Tie Game
+            elif self.game_end_tie():
+                print("Tie Game!")
+                self.gameEnd = True
+            #No Win
+            else:
+                self.gameEnd = False
     
     def host_game(self, host, port):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -88,11 +88,11 @@ class tic_tac_toe:
 
     def handle_connection(self, client):
         while not self.gameEnd:
-            if self.player == 2: #Host Turn
+            if self.player == 1: #Host Turn
                 move = input("Enter a move (row,column: )")
                 if(not (move.split(',') in self.moves)):
                     self.input_move(move.split(','))
-                    self.player = 1
+                    self.player = 2
                     client.send(move.encode('utf-8'))
                 else:
                     print("Move already made!")
@@ -102,9 +102,9 @@ class tic_tac_toe:
                     break
                 else:
                     self.input_move(data.decode('utf-8').split(','))
-                    self.player = 2
+                    self.player = 1
         client.close()
 
 if __name__ == "__main__":
     game = tic_tac_toe()
-    game.connect_to_game("localhost", 9999)
+    game.host_game("localhost", 9999)
